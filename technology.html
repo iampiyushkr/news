@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        #topDiv {
+            width: 90%;
+            margin: auto;
+            height: 100px;
+            background-color: rgb(175, 117, 32);
+        }
+
+        body {
+            font-weight: bolder;
+            font-size: 20px;
+            background-color: burlywood;
+        }
+
+        #div1 {
+            background-color: antiquewhite;
+            
+            
+            width: 95%;
+            margin: auto;
+            margin-top: 20px;
+        }
+
+        #topDiv button {
+            font-size: 15px;
+            height: 50px;
+            color: chocolate;
+            background-color: rgb(111, 73, 17);
+            margin-top: 25px;
+            margin-left: 20px;
+            cursor: pointer;
+        }
+        .div2{
+            height: 200px;
+            float: right;
+            width: 60%;
+        }
+        img{
+            height: 170px;
+            margin-left: 20px;
+            width: 300px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div id="topDiv">
+        <button onclick="sports()">Sports</button>
+        <button onclick="entertainment()">Entertainment</button>
+        <button onclick="technology()">Technology</button>
+    </div>
+    <h1 style="text-align: center; color: cadetblue">
+        ------Top 10 Headlines------
+    </h1>
+    <div id="data"></div>
+
+    <div id="buttons" style="width: 300px; margin: auto"></div>
+</body>
+
+</html>
+
+<script>
+    //fetch the data
+
+    //show the button
+
+    var parent = document.getElementById("data");
+
+    async function getData() {
+        try {
+            let res = await fetch(
+                "https://newsapi.org/v2/top-headlines?country=in&category=technology&apiKey=c2a9b36ffacd4fb9bfd504d78641b9f8&pageSize=10"
+            );
+            var data = await res.json();
+            return data; //return data as a promise
+        } catch (e) {
+            console.log("e:", e);
+        }
+    }
+
+    var data;
+
+    async function main() {
+        data1 = await getData();
+        data = data1.articles;
+        console.log(data1);
+        data.forEach(function (el) {
+            let div2=document.createElement('div')
+            div2.setAttribute('class','div2')
+            let div = document.createElement("div");
+            div.setAttribute("id", "div1");
+            let p = document.createElement("p");
+            let p1 = document.createElement("p");
+            p.innerText = `Title: ${el.title}`;
+            
+            p1.innerText = `Description:${el.description}`;
+            
+
+            var img=document.createElement('img')
+            img.src=el.urlToImage
+            div2.append(p, p1);
+
+            div.append(img,div2)
+
+            parent.append(div);
+        });
+    }
+    main();
+
+    function sports() {
+            window.location.href = "./sports.html"
+        }
+        function entertainment() {
+            window.location.href = "./entertainment.html"
+        }
+        function technology() {
+            window.location.href = "./technology.html"
+        }
+</script>
