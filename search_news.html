@@ -57,7 +57,9 @@
 
 <body>
     <div id="topDiv">
-    <button onclick="sports()" >Sports</button>
+        <input type="text" id="search"/>
+        <button onclick="Search()">Search</button>
+        <button onclick="sports()">Sports</button>
         <button onclick="entertainment()">Entertainment</button>
         <button onclick="technology()">Technology</button>
     </div>
@@ -79,11 +81,13 @@
     var parent = document.getElementById("data");
 
     async function getData() {
+        var search=document.getElementById("search").value
         try {
             let res = await fetch(
-                 "https://newsapi.org/v2/top-headlines?country=in&apiKey=c2a9b36ffacd4fb9bfd504d78641b9f8&pageSize=10"
+                `https://newsapi.org/v2/top-headlines?country=in&category=${search}&apiKey=c2a9b36ffacd4fb9bfd504d78641b9f8&pageSize=10`
             );
             var data = await res.json();
+            console.log(1)
             return data; //return data as a promise
         } catch (e) {
             console.log("e:", e);
@@ -92,7 +96,7 @@
 
     var data;
 
-    async function main() {
+    async function Search() {
         data1 = await getData();
         data = data1.articles;
         console.log(data1);
@@ -117,16 +121,16 @@
             parent.append(div);
         });
     }
-    main();
+    
 
-    function sports(){
-        window.location.href="./sports.html"
+    function sports() {
+        window.location.href = "./sports.html"
     }
-    function entertainment(){
-        window.location.href="./entertainment.html"
+    function entertainment() {
+        window.location.href = "./entertainment.html"
     }
-     function technology() {
-            window.location.href = "./technology.html"
-        }
-   
+    function technology() {
+        window.location.href = "./technology.html"
+    }
+
 </script>
